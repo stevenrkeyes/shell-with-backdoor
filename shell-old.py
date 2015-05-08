@@ -7,13 +7,7 @@ import subprocess
 import sys
 import urllib2
 
-red = "\033[0;31m"
-green = "\033[0;32m"
-yellow = "\033[0;33m"
-blue = "\033[0;34m"
-normal = "\033[0m"
-
-prompt = "%spyshell %s$%s " % (blue, green, normal, )
+prompt = "pyshell $ "
 count = 0
 
 class CommandError(Exception):
@@ -119,9 +113,9 @@ def run_command(cmd, args):
         try:
             commands[cmd](args)
         except CommandError, e:
-            print "%s%s%s" % (red, e.message, red, )
+            print e.message
     else:
-        print "%s%s%s: %scommand not found%s" % (yellow, cmd, normal, red, normal, )
+        print "%s: command not found" % (cmd, )
 
 def shell():
     try:
